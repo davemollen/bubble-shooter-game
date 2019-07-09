@@ -1,4 +1,4 @@
-interface Bubble {
+export interface Bubble {
   color: string | null
 }
 

@@ -6,24 +6,27 @@ export const GameContext = createContext({})
 const GameContextProvider: React.FC = (props) => {
   const [state]: GameState = useState({
     gameTable: [[],[],[],[],[],[],[],[],[],[],[]],
-    shootingBubble: {color: 'red'}
+    shootingBubble: { color: 'red' }
   })
 
-  useEffect(() => {
-    for(let column=10; column>=0; column--){
+  const randomColor = () => {
+    const allColors: string[] = ['blue', 'red', 'purple', 'green'];
+    return allColors[Math.floor(Math.random() * allColors.length)];
+  } 
 
+  useEffect(() => {
+    // initialize state on mount
+    for(let column=10; column>=0; column--){
       for(let row=8; row>=0; row--){
         if(row < 3){
-          const allColors = ['blue', 'red', 'purple', 'green'];
-          const randomColor = allColors[Math.floor(Math.random() * 4)];
-          state.gameTable[row][column] = { color: randomColor }
+          state.gameTable[row][column] = { color: randomColor() }
         } else {
           state.gameTable[row][column] = { color: null }
         }
       }
-
     }
-  }, [state.gameTable])
+    state.shootingBubble.color = randomColor()
+  }, [state.gameTable, state.shootingBubble])
 
   return (
     <GameContext.Provider value={ {...state} }>

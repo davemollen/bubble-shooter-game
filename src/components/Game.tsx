@@ -1,13 +1,10 @@
 import React, { useContext } from 'react'
 import { GameContext } from '../contexts/GameContext'
+import { Bubble } from '../types/GameTypes'
 
 type GameProps = {
   handleMousePosition: Function,
   angle: number
-}
-
-type ArrayElement = {
-  color: string | null
 }
 
 const Game: React.FC<GameProps> = ({handleMousePosition, angle}) => {
@@ -20,7 +17,7 @@ const Game: React.FC<GameProps> = ({handleMousePosition, angle}) => {
 
     const leftOffset = rowIndex % 2 ? {paddingLeft: '25px'} : {paddingLeft: '0px'}
     
-    const rows = row.map((element: ArrayElement, columnIndex: number) => {
+    const rows = row.map((element: Bubble, columnIndex: number) => {
       if(element.color !== null){
         return (
           <div 
