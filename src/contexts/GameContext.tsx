@@ -1,130 +1,40 @@
-import React, { createContext, useState } from 'react'
+import React, { createContext, useState, useEffect } from 'react'
 
 export const GameContext = createContext({})
 
 const GameContextProvider: React.FC = (props) => {
-  const [state] = useState({
+  const [state, setState] = useState({
     gameTable: [
-      [
-        {color: 'blue'}, 
-        {color: 'red'}, 
-        {color: 'purple'}, 
-        {color: 'green'}, 
-        {color: 'purple'}, 
-        {color: 'green'}, 
-        {color: 'red'}, 
-        {color: 'purple'}, 
-        {color: 'green'}, 
-        {color: 'red'}, 
-        {color: 'green'}
-      ],
-      [
-        {color: 'blue'}, 
-        {color: 'red'}, 
-        {color: 'purple'}, 
-        {color: 'green'}, 
-        {color: 'purple'}, 
-        {color: 'green'}, 
-        {color: 'red'}, 
-        {color: 'purple'}, 
-        {color: 'green'}, 
-        {color: 'red'}, 
-        {color: 'green'}
-      ],
-      [
-        {color: null}, 
-        {color: null}, 
-        {color: null}, 
-        {color: null},  
-        {color: null}, 
-        {color: null},  
-        {color: null}, 
-        {color: null},  
-        {color: null}, 
-        {color: null}, 
-        {color: null}
-      ],
-      [
-        {color: null}, 
-        {color: null}, 
-        {color: null}, 
-        {color: null},  
-        {color: null}, 
-        {color: null},  
-        {color: null}, 
-        {color: null},  
-        {color: null}, 
-        {color: null}, 
-        {color: null}
-      ],
-      [
-        {color: null}, 
-        {color: null}, 
-        {color: null}, 
-        {color: null},  
-        {color: null}, 
-        {color: null},  
-        {color: null}, 
-        {color: null},  
-        {color: null}, 
-        {color: null}, 
-        {color: null}
-      ],[
-        {color: null}, 
-        {color: null}, 
-        {color: null}, 
-        {color: null},  
-        {color: null}, 
-        {color: null},  
-        {color: null}, 
-        {color: null},  
-        {color: null}, 
-        {color: null}, 
-        {color: null}
-      ],
-      [
-        {color: null}, 
-        {color: null}, 
-        {color: null}, 
-        {color: null},  
-        {color: null}, 
-        {color: null},  
-        {color: null}, 
-        {color: null},  
-        {color: null}, 
-        {color: null}, 
-        {color: null}
-      ],
-      [
-        {color: null}, 
-        {color: null}, 
-        {color: null}, 
-        {color: null},  
-        {color: null}, 
-        {color: null},  
-        {color: null}, 
-        {color: null},  
-        {color: null}, 
-        {color: null}, 
-        {color: null}
-      ],
-      [
-        {color: null}, 
-        {color: null}, 
-        {color: null}, 
-        {color: null},  
-        {color: null}, 
-        {color: null},  
-        {color: null}, 
-        {color: null},  
-        {color: null}, 
-        {color: null}, 
-        {color: null}
-      ]
+      [{color: ''}],
+      [{color: ''}],
+      [{color: ''}],
+      [{color: ''}],
+      [{color: ''}],
+      [{color: ''}],
+      [{color: ''}],
+      [{color: ''}],
+      [{color: ''}],
     ],
     shootingBubble: {color: 'red'}
   })
 
+  useEffect(() => {
+    for(let column=8; column>=0; column--){
+
+      for(let row=8; row>=0; row--){
+        if(row < 6){
+          const allColors = ['blue', 'red', 'purple', 'green'];
+          const randomColor = allColors[Math.floor(Math.random() * 4)];
+          state.gameTable[row][column] = { color: randomColor }
+        } else {
+          state.gameTable[row][column] = { color: '' }
+        }
+      }
+
+    }
+  }, [])
+
+  console.log('gameTable', state.gameTable)
   return (
     <GameContext.Provider value={ {...state} }>
       {props.children}

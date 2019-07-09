@@ -17,7 +17,9 @@ const Game: React.FC<GameProps> = ({handleMousePosition, angle}) => {
     return <p>Loading...</p>
   }
   const bubbles = gameTable.map((row: any[], rowIndex: number) => {
+
     const leftOffset = rowIndex % 2 ? {paddingLeft: '25px'} : {paddingLeft: '0px'}
+    
     const rows = row.map((element: ArrayElement, columnIndex: number) => {
       if(element.color !== null){
         return (
