@@ -2,7 +2,7 @@ export interface Bubble {
   color: string | null
 }
 
-interface Bubbles {
+export interface Bubbles {
   gameTable: Bubble[][],
   shootingBubble: Bubble
 }
