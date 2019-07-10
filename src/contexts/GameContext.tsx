@@ -1,15 +1,10 @@
-import React, { createContext, useEffect, useReducer } from 'react'
+import React, { createContext, useReducer } from 'react'
 import { Bubbles } from '../types/GameTypes'
 import { initializeGame } from '../actions/gameActions'
 
 export const GameContext = createContext({})
 
-const emptyState = {
-  gameTable: [[],[],[],[],[],[],[],[],[]],
-  shootingBubble: {color: null}
-}
-
-const gameReducer = (state: Bubbles, action: {type: string, payload: Bubbles}) => {
+const gameReducer = (state: Bubbles, action: {type: string, payload: any}) => {
   switch(action.type){
     default:
       return state
@@ -17,11 +12,7 @@ const gameReducer = (state: Bubbles, action: {type: string, payload: Bubbles}) =
 }
 
 const GameContextProvider: React.FC = (props) => {
-  const [state, dispatch] = useReducer(gameReducer, emptyState)
-
-  useEffect(() => {
-    initializeGame(state)
-  }, [state])
+  const [state, dispatch] = useReducer(gameReducer, initializeGame())
 
   return (
     <GameContext.Provider value={{state, dispatch}}>
