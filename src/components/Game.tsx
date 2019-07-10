@@ -8,7 +8,8 @@ type GameProps = {
 }
 
 const Game: React.FC<GameProps> = ({handleMousePosition, angle}) => {
-  const { gameTable, shootingBubble}: any = useContext(GameContext)
+  const { state }: any = useContext(GameContext)
+  const { gameTable, shootingBubble } = state
 
   if(gameTable === undefined){
     return <p>Loading...</p>
