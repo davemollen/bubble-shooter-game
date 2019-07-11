@@ -1,35 +1,21 @@
-import React, { createContext, useState, useEffect } from 'react'
-import { GameState } from '../types/GameTypes'
+import React, { createContext, useReducer } from 'react'
+import { Bubbles } from '../types/GameTypes'
+import { initializeGame } from '../actions/gameActions'
 
 export const GameContext = createContext({})
 
+const gameReducer = (state: Bubbles, action: {type: string, payload: any}) => {
+  switch(action.type){
+    default:
+      return state
+  }
+}
+
 const GameContextProvider: React.FC = (props) => {
-  const [state]: GameState = useState({
-    gameTable: [[],[],[],[],[],[],[],[],[],[],[]],
-    shootingBubble: { color: 'red' }
-  })
-
-  const randomColor = () => {
-    const allColors: string[] = ['blue', 'red', 'purple', 'green'];
-    return allColors[Math.floor(Math.random() * allColors.length)];
-  } 
-
-  useEffect(() => {
-    // initialize state on mount
-    for(let column=10; column>=0; column--){
-      for(let row=8; row>=0; row--){
-        if(row < 3){
-          state.gameTable[row][column] = { color: randomColor() }
-        } else {
-          state.gameTable[row][column] = { color: null }
-        }
-      }
-    }
-    state.shootingBubble.color = randomColor()
-  }, [state.gameTable, state.shootingBubble])
+  const [state, dispatch] = useReducer(gameReducer, initializeGame())
 
   return (
-    <GameContext.Provider value={ {...state} }>
+    <GameContext.Provider value={{state, dispatch}}>
       {props.children}
     </GameContext.Provider>
   )
