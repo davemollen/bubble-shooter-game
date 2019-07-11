@@ -1,132 +1,21 @@
-import React, { createContext, useState } from 'react'
+import React, { createContext, useReducer } from 'react'
+import { Bubbles } from '../types/GameTypes'
+import { initializeGame } from '../actions/gameActions'
 
 export const GameContext = createContext({})
 
+const gameReducer = (state: Bubbles, action: {type: string, payload: any}) => {
+  switch(action.type){
+    default:
+      return state
+  }
+}
+
 const GameContextProvider: React.FC = (props) => {
-  const [state] = useState({
-    gameTable: [
-      [
-        {color: 'blue'}, 
-        {color: 'red'}, 
-        {color: 'purple'}, 
-        {color: 'green'}, 
-        {color: 'purple'}, 
-        {color: 'green'}, 
-        {color: 'red'}, 
-        {color: 'purple'}, 
-        {color: 'green'}, 
-        {color: 'red'}, 
-        {color: 'green'}
-      ],
-      [
-        {color: 'blue'}, 
-        {color: 'red'}, 
-        {color: 'purple'}, 
-        {color: 'green'}, 
-        {color: 'purple'}, 
-        {color: 'green'}, 
-        {color: 'red'}, 
-        {color: 'purple'}, 
-        {color: 'green'}, 
-        {color: 'red'}, 
-        {color: 'green'}
-      ],
-      [
-        {color: null}, 
-        {color: null}, 
-        {color: null}, 
-        {color: null},  
-        {color: null}, 
-        {color: null},  
-        {color: null}, 
-        {color: null},  
-        {color: null}, 
-        {color: null}, 
-        {color: null}
-      ],
-      [
-        {color: null}, 
-        {color: null}, 
-        {color: null}, 
-        {color: null},  
-        {color: null}, 
-        {color: null},  
-        {color: null}, 
-        {color: null},  
-        {color: null}, 
-        {color: null}, 
-        {color: null}
-      ],
-      [
-        {color: null}, 
-        {color: null}, 
-        {color: null}, 
-        {color: null},  
-        {color: null}, 
-        {color: null},  
-        {color: null}, 
-        {color: null},  
-        {color: null}, 
-        {color: null}, 
-        {color: null}
-      ],[
-        {color: null}, 
-        {color: null}, 
-        {color: null}, 
-        {color: null},  
-        {color: null}, 
-        {color: null},  
-        {color: null}, 
-        {color: null},  
-        {color: null}, 
-        {color: null}, 
-        {color: null}
-      ],
-      [
-        {color: null}, 
-        {color: null}, 
-        {color: null}, 
-        {color: null},  
-        {color: null}, 
-        {color: null},  
-        {color: null}, 
-        {color: null},  
-        {color: null}, 
-        {color: null}, 
-        {color: null}
-      ],
-      [
-        {color: null}, 
-        {color: null}, 
-        {color: null}, 
-        {color: null},  
-        {color: null}, 
-        {color: null},  
-        {color: null}, 
-        {color: null},  
-        {color: null}, 
-        {color: null}, 
-        {color: null}
-      ],
-      [
-        {color: null}, 
-        {color: null}, 
-        {color: null}, 
-        {color: null},  
-        {color: null}, 
-        {color: null},  
-        {color: null}, 
-        {color: null},  
-        {color: null}, 
-        {color: null}, 
-        {color: null}
-      ]
-    ],
-    shootingBubble: {color: 'red'}
-  })
+  const [state, dispatch] = useReducer(gameReducer, initializeGame())
 
   return (
-    <GameContext.Provider value={ {...state} }>
+    <GameContext.Provider value={{state, dispatch}}>
       {props.children}
     </GameContext.Provider>
   )
