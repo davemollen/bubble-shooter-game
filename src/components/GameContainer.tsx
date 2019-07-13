@@ -5,7 +5,6 @@ import { shootBubble } from '../actions/gameActions'
 
 const GameContainer: React.FC = () => {
   const { state, dispatch }: any = useContext(GameContext)
-  const { gameTable, shootingBubble } = state
 
   const [localState, setAngle] = useState({
     angle: 0
@@ -19,7 +18,7 @@ const GameContainer: React.FC = () => {
   }
 
   const handleMouseDown = () => {
-    shootBubble(localState.angle, shootingBubble.color, gameTable)
+    shootBubble(localState.angle, state)
     dispatch({ type: 'SHOOT_BUBBLE', state })
   }
 
