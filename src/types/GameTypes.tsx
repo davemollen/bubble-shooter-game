@@ -7,4 +7,10 @@ export interface Bubbles {
   shootingBubble: Bubble
 }
 
-export interface GameState extends Array<Bubbles|Function>{}
+export type GameProps = {
+  handleMousePosition: Function,
+  handleMouseDown: Function,
+  angle: number
+}
+
+// export interface GameState extends Array<Bubbles|Function>{}
