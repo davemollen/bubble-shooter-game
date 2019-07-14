@@ -9,33 +9,36 @@ const bubbleStyle = (bubble: Bubble): Object => {
   })
 }
 
-const bubbleAnimation = (shoot: boolean, hitPosition: number[]): Object => {
-  const x = hitPosition[1] * 50 + (hitPosition[0] % 2 * 25)
-  const y = 500 - hitPosition[0]*50
+const bubbleAnimation = (shoot: boolean, hitCoordinates: number[]): Object => {
+  const hexagonalCorrection = hitCoordinates[0] % 2 * 25
+  const x = hitCoordinates[1] * 50 + hexagonalCorrection
+  const y = 500 - hitCoordinates[0]*50
 
   if(shoot){
     return ({
+      position: 'absolute',
       bottom: y,
       left: x,
       transition: 'all 0.5s' 
     })
   }
   return ({
+    position: 'absolute',
     bottom: '0px',
     left: '250px',
     transition: 'all 0s' 
   })
 }
 
-const shootingBubbleStyle = (shoot: boolean, bubble: Bubble, hitPosition: number[]): Object => {
+const shootingBubbleStyle = (shoot: boolean, bubble: Bubble, hitCoordinates: number[]): Object => {
   const color = bubbleStyle(bubble)
-  const position = bubbleAnimation(shoot, hitPosition)
+  const position = bubbleAnimation(shoot, hitCoordinates)
   return {...color, ...position} 
 }
 
 const Game: React.FC<GameProps> = ({handleMousePosition, handleMouseDown, handleTransitionEnd, angle, shoot}) => {
   const { state }: any = useContext(GameContext)
-  const { gameTable, shootingBubble, hitPosition } = state
+  const { gameTable, shootingBubble, hitCoordinates } = state
 
   if(gameTable === undefined){
     return <p>Loading...</p>
@@ -69,9 +72,9 @@ const Game: React.FC<GameProps> = ({handleMousePosition, handleMouseDown, handle
         <div className='line'></div>
         <div className='arrow' style={{transform: `rotate(${angle}deg)`}}></div>
         <div
-          className={'bubbleToShoot'}
+          className={'bubble'}
           onTransitionEnd={() => handleTransitionEnd()} 
-          style={shootingBubbleStyle(shoot, shootingBubble, hitPosition)}
+          style={shootingBubbleStyle(shoot, shootingBubble, hitCoordinates)}
         >
         </div>
       </div>         

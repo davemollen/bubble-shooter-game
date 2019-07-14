@@ -37,21 +37,6 @@
   border: solid 1px black;
 }
 
-.bubbleToShoot {
-  height: 45px;
-  width: 45px;
-  margin: 2.5px;
-  background-color: transparent;
-  border-radius: 50%;
-  display: inline-block;
-  box-sizing: border-box;
-  border: 1px solid black;
-  position: absolute;
-  left: 250px;
-  bottom: 0;
-  transition: bottom 1s;
-}
-
 .flexContainer {
   display: flex;
   flex-wrap: wrap;

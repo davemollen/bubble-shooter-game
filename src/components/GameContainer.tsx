@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react'
 import Game from './Game'
 import { GameContext } from '../contexts/GameContext'
-import { shootBubble } from '../actions/gameActions'
+import { shootBubble, removeBubbles } from '../actions/gameActions'
 
 const GameContainer: React.FC = () => {
   const { state, dispatch }: any = useContext(GameContext)
@@ -28,11 +28,13 @@ const GameContainer: React.FC = () => {
   }
 
   const handleTransitionEnd = () => {
-    setLocalState({
-      ...localState,
-      shoot: false
-    })
-    dispatch({ type: 'REMOVE_BUBBLES', payload: { state } })
+    if(localState.shoot){
+      setLocalState({
+        ...localState,
+        shoot: false
+      })
+      dispatch(removeBubbles(state))
+    }
   }
 
   return (
