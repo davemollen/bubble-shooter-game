@@ -9,7 +9,8 @@ const pickRandomColor = (): { color: string } => {
 export const initializeGame = (): Bubbles => {
   const state: Bubbles = {
     gameTable: [[],[],[],[],[],[],[],[],[]],
-    shootingBubble: { color: null }
+    shootingBubble: { color: null },
+    hitPosition: []
   }
 
   for(let column=10; column>=0; column--){
@@ -26,9 +27,7 @@ export const initializeGame = (): Bubbles => {
   return state
 }
 
-let matches: number[][] = []
-
-export const shootBubble = (angle: number, state: Bubbles) => {
+export const shootBubble = (angle: number, state: Bubbles): Object => {
   const { gameTable } = state
   let prevRow: number = 0
   let prevColumn: number = 0
@@ -38,6 +37,7 @@ export const shootBubble = (angle: number, state: Bubbles) => {
   let currentColumn: number = 5.5 + columnStepSize
   const startingRow: number = 8
 
+  let bubbleHit: number[] = []
   // Go through the rows and go a column to the left or right
   for(let row: number = startingRow; row>=0; row--){
     const hexagonalCorrection: number = row % 2 * -0.5
@@ -45,36 +45,44 @@ export const shootBubble = (angle: number, state: Bubbles) => {
     const roundedColumn: number = Math.floor(currentColumn + hexagonalCorrection)
 
     if(roundedColumn < 0 || roundedColumn > 10){
-      updateBubbles(prevRow, prevColumn, state)
-      break; //if bubble gets out of the screen break from loop
+      bubbleHit = [prevRow, prevColumn]
+      break
     }
 
     // Check if it hits a ball
     const hitBubbleColor: string | null = gameTable[row][roundedColumn].color
     
     if(hitBubbleColor !== null){
-      updateBubbles(prevRow, prevColumn, state)
-      break;
+      bubbleHit = [prevRow, prevColumn]
+      break
     }
     if(row === 0 && hitBubbleColor === null){
-      updateBubbles(row, roundedColumn, state)
+      bubbleHit = [row, roundedColumn]
     }
 
     prevRow = row
     prevColumn = roundedColumn
+  }
+  
+  // const [hitRow, hitColumn] = bubbleHit
+  // updateBubbles(hitRow, hitColumn, state)
+  return {
+    type: 'SHOOT_BUBBLE',
+    payload: {
+      bubbleHit
+    }
   }
 }
 
 const updateBubbles = (row: number, column: number, state: Bubbles) => {
   const { gameTable, shootingBubble } = state
   gameTable[row][column] = shootingBubble
-  // matches = [[row, column]]
-  matches = []
-  removeAdjacentBubbles(row, column, state)
+  let matches: number[][] = []
+  removeAdjacentBubbles(row, column, state, matches)
   state.shootingBubble = pickRandomColor()
 }
 
-const removeAdjacentBubbles = (rowHit: number, columnHit: number, state: Bubbles) => {
+const removeAdjacentBubbles = (rowHit: number, columnHit: number, state: Bubbles, matches: number[][]) => {
   const { gameTable, shootingBubble } = state
   const searchOffsets: number[][] = rowHit % 2 
     ? [
@@ -109,7 +117,7 @@ const removeAdjacentBubbles = (rowHit: number, columnHit: number, state: Bubbles
       })
       if(!duplicate){
         matches.push([neighborRow, neighborColumn])
-        removeAdjacentBubbles(neighborRow, neighborColumn, state)
+        removeAdjacentBubbles(neighborRow, neighborColumn, state, matches)
       }
     }
   })

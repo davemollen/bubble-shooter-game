@@ -4,13 +4,16 @@ export interface Bubble {
 
 export interface Bubbles {
   gameTable: Bubble[][],
-  shootingBubble: Bubble
+  shootingBubble: Bubble,
+  hitPosition: number[]
 }
 
 export type GameProps = {
   handleMousePosition: Function,
   handleMouseDown: Function,
-  angle: number
+  handleTransitionEnd: Function,
+  angle: number,
+  shoot: boolean
 }
 
 // export interface GameState extends Array<Bubbles|Function>{}
