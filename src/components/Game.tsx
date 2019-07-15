@@ -12,7 +12,7 @@ const Game: React.FC<GameProps> = ({handleMousePosition, handleMouseDown, handle
   }
 
   const bubbles = gameTable.map((row: Bubble[], rowIndex: number) => {
-    const leftOffset = rowIndex % 2 ? {paddingLeft: '25px'} : {paddingLeft: '0px'}
+    const leftOffset = rowIndex % 2 ? {paddingLeft: '2vw'} : {paddingLeft: '0vw'}
 
     const rows = row.map((column: Bubble, columnIndex: number) => {
       if(column.color !== null){
