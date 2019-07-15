@@ -15,7 +15,7 @@ const GameContainer: React.FC = () => {
     const updateAngle: number = localState.angle + (event.movementX * 0.5)
     setLocalState({
       ...localState,
-      angle: updateAngle < -90 ? -90 : updateAngle > 90 ? 90 : updateAngle
+      angle: updateAngle < -70 ? -70 : updateAngle > 70 ? 70 : updateAngle
     })
   }
 
