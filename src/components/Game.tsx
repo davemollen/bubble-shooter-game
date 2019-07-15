@@ -1,24 +1,18 @@
 import React, { useContext } from 'react'
 import { GameContext } from '../contexts/GameContext'
 import { Bubble, GameProps } from '../types/GameTypes'
+import { bubbleStyle, shootingBubbleStyle } from './BubbleStyles'
 
-const bubbleStyle = (bubble: Bubble): Object => {
-  return ({
-    backgroundColor: bubble.color,
-    background: `radial-gradient(circle at 20px 20px, ${bubble.color}, rgba(0,0,0,0.7))`
-  })
-}
-
-const Game: React.FC<GameProps> = ({handleMousePosition, handleMouseDown, angle}) => {
+const Game: React.FC<GameProps> = ({handleMousePosition, handleMouseDown, handleTransitionEnd, angle, shoot}) => {
   const { state }: any = useContext(GameContext)
-  const { gameTable, shootingBubble } = state
+  const { gameTable, shootingBubble, hitCoordinates } = state
 
   if(gameTable === undefined){
     return <p>Loading...</p>
   }
 
   const bubbles = gameTable.map((row: Bubble[], rowIndex: number) => {
-    const leftOffset = rowIndex % 2 ? {paddingLeft: '25px'} : {paddingLeft: '0px'}
+    const leftOffset = rowIndex % 2 ? {paddingLeft: '2vw'} : {paddingLeft: '0vw'}
 
     const rows = row.map((column: Bubble, columnIndex: number) => {
       if(column.color !== null){
@@ -34,7 +28,7 @@ const Game: React.FC<GameProps> = ({handleMousePosition, handleMouseDown, angle}
     })
     return <div key={rowIndex} className='flexContainer' style={leftOffset}>{rows}</div>
   })
-
+  
   return (
     <div className='fullscreen' 
       onMouseDown={() => handleMouseDown()}
@@ -44,7 +38,12 @@ const Game: React.FC<GameProps> = ({handleMousePosition, handleMouseDown, angle}
         <div className='flexContainer'>{bubbles}</div>
         <div className='line'></div>
         <div className='arrow' style={{transform: `rotate(${angle}deg)`}}></div>
-        <div className='bubble bubbleToShoot' style={bubbleStyle(shootingBubble)}></div>
+        <div
+          className={'bubble'}
+          onTransitionEnd={() => handleTransitionEnd()} 
+          style={shootingBubbleStyle(shoot, shootingBubble, hitCoordinates)}
+        >
+        </div>
       </div>         
     </div>
   )

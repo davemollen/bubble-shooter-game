@@ -12,67 +12,48 @@
 
 .gamescreen {
   position: relative;
-  width: 575px;
-  height: 550px;
+  width: 46vw; /*575px*/
+  height: 44vw; /*550px*/
   background-color: cadetblue;
-  margin: 40px auto 0 auto;
+  margin: 80px auto 0 auto;
   border: 2px solid black;
+  border-radius: 2vw;
 }
 
 .arrow {
   position: absolute;
-  bottom: 25px;
-  left: 262px; /* 275 - 13 */
-  width: 26px;
-  height: 75px;
+  bottom: 2vw;
+  left: 21vw;
+  width: 2vw;
+  height: 6vw;
   transform-origin: bottom;
   background: url('./images/arrow.png') no-repeat center;
+  background-size: 2vw 6vw;
   margin: 0 auto;
+  overflow: hidden;
 }
 
 .line {
   position: absolute;
-  bottom: 100px;
-  width: 575px;
+  bottom: 8vw;
+  width: 46vw;
   border: solid 1px black;
-}
-
-.bubbleToShoot {
-  position: absolute;
-  left: 250px;
-  bottom: 0;
 }
 
 .flexContainer {
   display: flex;
   flex-wrap: wrap;
-  /* justify-content: space-evenly; */
 }
 
 .bubble {
-  height: 45px;
-  width: 45px;
-  margin: 2.5px;
+  height: 3.6vw;
+  width: 3.6vw;
+  margin: 0.2vw;
   background-color: transparent;
   border-radius: 50%;
   display: inline-block;
   box-sizing: border-box;
-  border: 1px solid black;
+  z-index: 10;
+  /* border: 1px solid black; */
 }
-
-button{
-  padding: 5px 10px;
-    font-size: 14px;
-    background: #124482;
-    border: none;
-    color: #fff;
-    border-radius: 2px;
-}
-a{
-  font-size: 18px;
-  color: red;
-  text-decoration: none;
-
-}
-ul{list-style: none;}
 
