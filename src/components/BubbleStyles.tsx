@@ -8,9 +8,9 @@ const bubbleStyle = (bubble: Bubble): Object => {
 }
 
 const bubbleAnimation = (shoot: boolean, hitCoordinates: number[]): Object => {
-  const hexagonalCorrection = hitCoordinates[0] % 2 * 25
-  const x = hitCoordinates[1] * 50 + hexagonalCorrection
-  const y = 500 - hitCoordinates[0]*50
+  const hexagonalCorrection: number = hitCoordinates[0] % 2 * 2
+  const x: string = hitCoordinates[1] * 4 + hexagonalCorrection + 'vw'
+  const y: string = 40 - hitCoordinates[0] * 4 + 'vw'
 
   if(shoot){
     return ({
@@ -22,8 +22,8 @@ const bubbleAnimation = (shoot: boolean, hitCoordinates: number[]): Object => {
   }
   return ({
     position: 'absolute',
-    bottom: '0px',
-    left: '250px',
+    bottom: '0vw',
+    left: '20vw',
     transition: 'all 0s' 
   })
 }
