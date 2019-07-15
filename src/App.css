@@ -37,12 +37,6 @@
   border: solid 1px black;
 }
 
-.bubbleToShoot {
-  position: absolute;
-  left: 250px;
-  bottom: 0;
-}
-
 .flexContainer {
   display: flex;
   flex-wrap: wrap;
