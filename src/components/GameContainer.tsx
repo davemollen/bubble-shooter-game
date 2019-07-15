@@ -20,9 +20,7 @@ const GameContainer: React.FC = () => {
   }
 
   const handleMouseDown = () => {
-    if(localState.shoot){
-      return
-    }
+    if(localState.shoot) return
     dispatch(shootBubble(localState.angle, state))
     setLocalState({
       ...localState,
