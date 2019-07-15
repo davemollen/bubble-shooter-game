@@ -77,6 +77,25 @@ const unpackGameTable = (gameTable: Bubble[][]) => {
   return gameTable.map(column => column.map(row => row))
 }
 
+export const removeBubbles = (state: Bubbles) => {
+  const { gameTable, shootingBubble, hitCoordinates } = state
+  const [row, column] = hitCoordinates
+  const gameTableCopy = unpackGameTable(gameTable)
+
+  gameTableCopy[row][column] = shootingBubble
+  let matches: number[][] = []
+  removeAdjacentBubbles({...state, gameTable: gameTableCopy}, matches)
+
+  return {
+    type: 'REMOVE_BUBBLES',
+    payload: {
+      ...state,
+      gameTable: gameTableCopy,
+      shootingBubble: pickRandomColor()
+    }
+  }
+}
+
 const removeAdjacentBubbles = (state: Bubbles, matches: number[][]) => {
   const { gameTable, shootingBubble, hitCoordinates } = state
   const [row, column] = hitCoordinates
@@ -122,24 +141,5 @@ const removeAdjacentBubbles = (state: Bubbles, matches: number[][]) => {
     matches.forEach(match => {
       gameTable[match[0]][match[1]].color = null
     })
-  }
-}
-
-export const removeBubbles = (state: Bubbles) => {
-  const { gameTable, shootingBubble, hitCoordinates } = state
-  const [row, column] = hitCoordinates
-  const gameTableCopy = unpackGameTable(gameTable)
-
-  gameTableCopy[row][column] = shootingBubble
-  let matches: number[][] = []
-  removeAdjacentBubbles({...state, gameTable: gameTableCopy}, matches)
-
-  return {
-    type: 'REMOVE_BUBBLES',
-    payload: {
-      ...state,
-      gameTable: gameTableCopy,
-      shootingBubble: pickRandomColor()
-    }
   }
 }
