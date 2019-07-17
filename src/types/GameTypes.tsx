@@ -7,6 +7,7 @@ export interface Bubbles {
   shootingBubble: Bubble,
   hitCoordinates: number[],
   gameStatus: string
+  score: number
 }
 
 export type GameProps = {

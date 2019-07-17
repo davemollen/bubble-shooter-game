@@ -1,5 +1,6 @@
 import React, { useContext } from 'react'
 import { GameContext } from '../contexts/GameContext'
+import ScoreForm from './ScoreForm'
 
 const StartGame: React.FC = () => {
   const { state, dispatch }: any = useContext(GameContext)
@@ -29,7 +30,7 @@ const StartGame: React.FC = () => {
     return (
       <div className='overlay'>
         <div className='gamestatus'>
-          <h1>GAME OVER</h1>
+          <ScoreForm />
         </div>
       </div>
     )

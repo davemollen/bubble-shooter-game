@@ -3,7 +3,7 @@ import { GameContext } from '../contexts/GameContext'
 
 const Timer: React.FC = () => {
   const { state, dispatch }: any = useContext(GameContext)
-  const { gameStatus } = state
+  const { gameStatus, score } = state
   const [timer, setTimer] = useState(120)
     
   useEffect(() => {
@@ -36,7 +36,8 @@ const Timer: React.FC = () => {
 
   return (
     <div className='timer'>
-      <h4>{secondsToMinutes(timer)}</h4>
+      <h4>Time: {secondsToMinutes(timer)}</h4>
+      <h4>Score: {score}</h4>
     </div>
   )
 }
