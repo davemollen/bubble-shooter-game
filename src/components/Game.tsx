@@ -34,7 +34,7 @@ const Game: React.FC<GameProps> = ({handleMousePosition, handleMouseDown, handle
       onMouseDown={() => handleMouseDown()}
       onMouseMove={(event) => handleMousePosition(event)}
     >
-      <div className='gamescreen'>
+      <div className='gamescreen'> 
         <div className='flexContainer'>{bubbles}</div>
         <div className='line'></div>
         <div className='arrow' style={{transform: `rotate(${angle}deg)`}}></div>

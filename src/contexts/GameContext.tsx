@@ -6,6 +6,8 @@ export const GameContext = createContext({})
 
 const gameReducer = (state: Bubbles, action: {type: string, payload: any}) => {
   switch(action.type){
+    case 'GAME_STATUS':
+      return action.payload
     case 'SHOOT_BUBBLE':
       return action.payload 
     case 'REMOVE_BUBBLES':

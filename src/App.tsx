@@ -1,7 +1,9 @@
 import React from 'react';
 import './App.css';
 import Title from './components/Title'
+import Timer from './components/Timer'
 import GameContextProvider from './contexts/GameContext';
+import GameStatus from './components/GameStatus'
 import GameContainer from './components/GameContainer';
 
 const App: React.FC = () => {
@@ -9,7 +11,9 @@ const App: React.FC = () => {
     <div className="App">
       <Title />
       <GameContextProvider>
+        <GameStatus />
         <GameContainer />
+        <Timer />
       </GameContextProvider>
     </div>
   );
