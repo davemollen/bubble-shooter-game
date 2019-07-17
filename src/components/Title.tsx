@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Title = () => {
+const Title: React.FC = () => {
   return (
     <div>
       <h1>Bubble Shooter</h1>

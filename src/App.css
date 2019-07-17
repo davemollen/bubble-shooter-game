@@ -18,6 +18,7 @@
   margin: 80px auto 0 auto;
   border: 2px solid black;
   border-radius: 2vw;
+  z-index: 0;
 }
 
 .arrow {
@@ -57,3 +58,65 @@
   /* border: 1px solid black; */
 }
 
+.timer {
+  float: right;
+  width: 20vw;
+  margin-right: 6.5vw;
+  background-color: cadetblue;
+  border: 2px solid black;
+  border-radius: 2vw;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: rgba(0,0,0,0.25);
+  z-index: 5;
+}
+
+.gamestatus {
+  margin: 22vw auto 0 auto;
+  padding: 30px 0;
+  z-index: 10;
+}
+
+form {
+  width: 200px;
+  margin: 0 auto;
+}
+
+input, input:focus {
+  text-align: center;
+  width: 150px;
+  height: 30px;
+  margin: 20px;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 500;
+  outline: none;
+  background-color: rgb(211, 234, 241);
+  border: solid 1px black;
+}
+
+button {
+  width: 120px;
+  height: 40px;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: 500;
+  background-color: rgb(211, 234, 241);
+  border: solid 1px black;
+  transition: transform 0.1s;
+}
+button:hover {
+  transform: scale(1.2);
+}
+button:active {
+  transform: scale(0.9);
+}
+button:focus {
+  outline: none;
+}
