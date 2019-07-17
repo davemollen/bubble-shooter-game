@@ -2,7 +2,7 @@ import { Bubbles, Bubble } from '../types/GameTypes'
 
 const pickRandomColor = (): { color: string } => {
   const allColors: string[] = ['blue', 'red', 'purple', 'green']
-  const randomColor =  allColors[Math.floor(Math.random() * allColors.length)]
+  const randomColor: string =  allColors[Math.floor(Math.random() * allColors.length)]
   return { color: randomColor }
 } 
 
@@ -10,7 +10,8 @@ export const initializeGame = (): Bubbles => {
   const state: Bubbles = {
     gameTable: [[],[],[],[],[],[],[],[],[]],
     shootingBubble: { color: null },
-    hitCoordinates: []
+    hitCoordinates: [],
+    gameStatus: 'inactive'
   }
 
   for(let column=10; column>=0; column--){
@@ -84,7 +85,7 @@ export const removeBubbles = (state: Bubbles) => {
 
   gameTableCopy[row][column] = shootingBubble
   let matches: number[][] = []
-  removeAdjacentBubbles({...state, gameTable: gameTableCopy}, matches)
+  removeAdjacentBubbles({...state, gameTable: gameTableCopy}, matches) 
 
   return {
     type: 'REMOVE_BUBBLES',
@@ -96,8 +97,56 @@ export const removeBubbles = (state: Bubbles) => {
   }
 }
 
+// const removeAdjacentBubbles = (state: Bubbles, matches: number[][]) => {
+//   const { gameTable, shootingBubble, hitCoordinates } = state
+//   const [row, column] = hitCoordinates
+//   const searchOffsets: number[][] = row % 2 
+//     ? [
+//         [-1, 0],
+//         [-1, 1],
+//         [0, -1],
+//         [0, 1],
+//         [1, 0],
+//         [1, 1]
+//     ]
+//     : [
+//         [-1, -1],
+//         [-1, 0],
+//         [0, -1],
+//         [0, 1],
+//         [1, -1],
+//         [1, 0]
+//     ]
+
+//   searchOffsets.forEach(offset => {
+//     const [offsetRow, offsetColumn] = offset
+//     const adjacentRow = row + offsetRow
+//     const adjacentColumn = column + offsetColumn
+//     if(adjacentRow < 0 || adjacentRow > 8 || adjacentColumn < 0 || adjacentColumn > 10){
+//       return;
+//     }
+
+//     const adjacentColor = gameTable[adjacentRow][adjacentColumn].color
+//     if(adjacentColor === shootingBubble.color){
+//       const duplicate = matches.some(match => {
+//         return match[0] === adjacentRow && match[1] === adjacentColumn
+//       })
+//       if(!duplicate){
+//         matches.push([adjacentRow, adjacentColumn])
+//         removeAdjacentBubbles({...state, hitCoordinates: [adjacentRow, adjacentColumn]}, matches)
+//       }
+//     }
+//   })
+//   if(matches.length > 2){
+//     gameTable[row][column].color = null
+//     matches.forEach(match => {
+//       gameTable[match[0]][match[1]].color = null
+//     })
+//   }
+// }
+
 const removeAdjacentBubbles = (state: Bubbles, matches: number[][]) => {
-  const { gameTable, shootingBubble, hitCoordinates } = state
+  const { gameTable, hitCoordinates } = state
   const [row, column] = hitCoordinates
   const searchOffsets: number[][] = row % 2 
     ? [
@@ -119,27 +168,40 @@ const removeAdjacentBubbles = (state: Bubbles, matches: number[][]) => {
 
   searchOffsets.forEach(offset => {
     const [offsetRow, offsetColumn] = offset
-    const neighborRow = row + offsetRow
-    const neighborColumn = column + offsetColumn
-    if(neighborRow < 0 || neighborRow > 8 || neighborColumn < 0 || neighborColumn > 10){
-      return;
+    const adjacentRow = row + offsetRow
+    const adjacentColumn = column + offsetColumn
+    if(breakFromSearchOffset(state, matches, adjacentRow, adjacentColumn)){
+      return
     }
 
-    const neighborColor = gameTable[neighborRow][neighborColumn].color
-    if(neighborColor === shootingBubble.color){
-      const duplicate = matches.some(match => {
-        return match[0] === neighborRow && match[1] === neighborColumn
-      })
-      if(!duplicate){
-        matches.push([neighborRow, neighborColumn])
-        removeAdjacentBubbles({...state, hitCoordinates: [neighborRow, neighborColumn]}, matches)
-      }
-    }
+    matches.push([adjacentRow, adjacentColumn])
+    removeAdjacentBubbles({...state, hitCoordinates: [adjacentRow, adjacentColumn]}, matches)
   })
+
   if(matches.length > 2){
     gameTable[row][column].color = null
     matches.forEach(match => {
       gameTable[match[0]][match[1]].color = null
     })
   }
+}
+
+const breakFromSearchOffset = (state: Bubbles, matches: number[][], adjacentRow: number, adjacentColumn: number) => {
+  if(adjacentRow < 0 || adjacentRow > 8 || adjacentColumn < 0 || adjacentColumn > 10){
+    return true
+  }
+  
+  const adjacentBubble: Bubble = state.gameTable[adjacentRow][adjacentColumn]
+  if(adjacentBubble.color !== state.shootingBubble.color){
+    return true
+  }
+  
+  const alreadyChecked: boolean = matches.some(match => {
+    return match[0] === adjacentRow && match[1] === adjacentColumn
+  })
+  if(alreadyChecked){
+    return true
+  }
+  
+  return false
 }

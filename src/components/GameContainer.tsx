@@ -12,6 +12,7 @@ const GameContainer: React.FC = () => {
   })
 
   const handleMousePosition = (event: MouseEvent) => {
+    if(state.gameStatus !== 'active') return
     const updateAngle: number = localState.angle + (event.movementX * 0.5)
     setLocalState({
       ...localState,
@@ -20,7 +21,7 @@ const GameContainer: React.FC = () => {
   }
 
   const handleMouseDown = () => {
-    if(localState.shoot) return
+    if(localState.shoot || state.gameStatus !== 'active') return
     dispatch(shootBubble(localState.angle, state))
     setLocalState({
       ...localState,
