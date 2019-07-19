@@ -1,6 +1,6 @@
-![demo](https://media.giphy.com/media/eHjcw2Ek7v8HfeB2Hb/giphy.gif)
-
 ## [ Check out the deployed app here!](https://bubble-shooter-game.herokuapp.com/)
+
+![demo](https://media.giphy.com/media/eHjcw2Ek7v8HfeB2Hb/giphy.gif)
 
 ## Table of contents:
 - [Technologies used](#Technologies-used)
