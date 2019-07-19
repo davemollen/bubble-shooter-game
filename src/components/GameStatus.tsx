@@ -10,7 +10,6 @@ const StartGame: React.FC = () => {
     dispatch({
       type: 'GAME_STATUS',
       payload: {
-        ...state,
         gameStatus: 'active'
       }
     })

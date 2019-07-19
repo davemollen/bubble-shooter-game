@@ -1,4 +1,4 @@
-import { Bubbles, Bubble } from '../types/GameTypes'
+import { Bubbles, Bubble, DispatchBubbles } from '../types/GameTypes'
 
 const pickRandomColor = (): { color: string } => {
   const allColors: string[] = ['blue', 'red', 'purple', 'green']
@@ -6,7 +6,7 @@ const pickRandomColor = (): { color: string } => {
   return { color: randomColor }
 } 
 
-export const initializeGame = (): Bubbles => {
+export const initializeGame = (): DispatchBubbles => {
   const state: Bubbles = {
     gameTable: [[],[],[],[],[],[],[],[],[]],
     shootingBubble: { color: null },
@@ -26,10 +26,15 @@ export const initializeGame = (): Bubbles => {
   }
   state.shootingBubble = pickRandomColor()
 
-  return state
+  return {
+    type: 'INITIALIZE',
+    payload: {
+      ...state  
+    }
+  }
 }
 
-export const shootBubble = (angle: number, state: Bubbles): Object => {
+export const shootBubble = (angle: number, state: Bubbles): DispatchBubbles => {
   const { gameTable } = state
   let prevRow: number = 0
   let prevColumn: number = 0
@@ -69,17 +74,16 @@ export const shootBubble = (angle: number, state: Bubbles): Object => {
   return {
     type: 'SHOOT_BUBBLE',
     payload: {
-      ...state,
       hitCoordinates
     }
   }
 }
 
-const unpackGameTable = (gameTable: Bubble[][]) => {
+const unpackGameTable = (gameTable: Bubble[][]): Bubble[][] => {
   return gameTable.map(column => column.map(row => row))
 }
 
-export const removeBubbles = (state: Bubbles) => {
+export const removeBubbles = (state: Bubbles): DispatchBubbles => {
   const { gameTable, shootingBubble, hitCoordinates, score } = state
   const [row, column] = hitCoordinates
   const gameTableCopy = unpackGameTable(gameTable)
@@ -92,7 +96,6 @@ export const removeBubbles = (state: Bubbles) => {
   return {
     type: 'REMOVE_BUBBLES',
     payload: {
-      ...state,
       gameTable: gameTableCopy,
       shootingBubble: pickRandomColor(),
       score: updatedScore
@@ -100,7 +103,7 @@ export const removeBubbles = (state: Bubbles) => {
   }
 }
 
-const removeAdjacentBubbles = (state: Bubbles, matches: number[][]) => {
+const removeAdjacentBubbles = (state: Bubbles, matches: number[][]): number => {
   const { gameTable, hitCoordinates } = state
   const [row, column] = hitCoordinates
   const searchOffsets: number[][] = row % 2 
@@ -143,7 +146,7 @@ const removeAdjacentBubbles = (state: Bubbles, matches: number[][]) => {
   return 0
 }
 
-const breakFromSearchOffset = (state: Bubbles, matches: number[][], adjacentRow: number, adjacentColumn: number) => {
+const breakFromSearchOffset = (state: Bubbles, matches: number[][], adjacentRow: number, adjacentColumn: number): boolean => {
   if(adjacentRow < 0 || adjacentRow > 8 || adjacentColumn < 0 || adjacentColumn > 10){
     return true
   }
