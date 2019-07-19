@@ -18,6 +18,10 @@ const Timer: React.FC = () => {
     return () => clearInterval(interval);
   }, [timer, gameStatus]);
 
+  if(timer === 0 && gameStatus === 'inactive'){
+    setTimer(120)
+  }
+
   if(timer === 0 && gameStatus === 'active'){
     dispatch({
       type: 'GAME_STATUS',
