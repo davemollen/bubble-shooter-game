@@ -18,20 +18,16 @@ const StartGame: React.FC = () => {
 
   if(gameStatus === 'inactive'){
     return (
-      <div className='overlay'>
-        <div className='gamestatus'>
-          <button onClick={handleClick}>START GAME</button>
-        </div>
-      </div> 
+      <div className='gamestatus'>
+        <button onClick={handleClick}>START GAME</button>
+      </div>
     )
   }
 
   if(gameStatus === 'finished'){
     return (
-      <div className='overlay'>
-        <div className='gamestatus'>
-          <ScoreForm />
-        </div>
+      <div className='gamestatus'>
+        <ScoreForm />
       </div>
     )
   }
