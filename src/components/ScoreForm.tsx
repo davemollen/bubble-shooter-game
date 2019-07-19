@@ -1,12 +1,14 @@
-import React, { useState } from 'react'
-
+import React, { useState, useContext } from 'react'
+import { GameContext } from '../contexts/GameContext'
+import { initializeGame } from '../actions/gameActions'
 
 const ScoreForm: React.FC = () => {
+  const { dispatch }: any = useContext(GameContext)
   const [name, setName] = useState('')
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    window.location.reload()
+    dispatch(initializeGame())
   }
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {

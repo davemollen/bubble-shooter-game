@@ -10,12 +10,21 @@ export interface Bubbles {
   score: number
 }
 
-export type GameProps = {
+export interface DispatchBubbles {
+  type: string,
+  payload: {
+    gameTable?: Bubble[][],
+    shootingBubble?: Bubble,
+    hitCoordinates?: number[],
+    gameStatus?: string
+    score?: number
+  }
+}
+
+export interface GameProps {
   handleMousePosition: Function,
   handleMouseDown: Function,
   handleTransitionEnd: Function,
   angle: number,
   shoot: boolean
 }
-
-// export interface GameState extends Array<Bubbles|Function>{}
