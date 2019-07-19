@@ -1,44 +1,29 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+![demo](https://media.giphy.com/media/eHjcw2Ek7v8HfeB2Hb/giphy.gif)
 
-## Available Scripts
+## [ Check out the deployed app here!](https://bubble-shooter-game.herokuapp.com/)
 
-In the project directory, you can run:
+## Table of contents:
+- [Technologies used](#Technologies-used)
+- [Description](#Description)
+- [Future work](#Future-work)
+- [Install instructions](#Install-instructions)
 
-### `npm start`
+## Technologies used
+- React Hooks/Context
+- TypeScript
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Goal
+The goal for this project was to get more practice with algorithms, React Hooks/Context and TypeScript. 
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+## Description
+This is an interpretation of the famous Bubble Shooter game. I haven't done this the popular way by using the HTML5 <canvas\> element. It has all been done with a simple two-dimensional array and CSS animation to animate the shot bubble. When you shoot a bubble a trajectory of the array elements the shot bubble passes through is being calculated. For every element it checks if there's a collision with another bubble. Once it hits a bubble, it checks the color. If the colors match I run a [recursive function](/src/actions/gameActions.tsx#L106) to check if the adjacent bubbles are of the same color too. If there are more than 3 adjacent bubbles of the same color they get removed and you increment your score. The more aligning bubbles of the same color, the higher the score. Each game lasts 2 minutes.
 
-### `npm test`
+## Future work
+- Write high scores to a database and show them on screen
+- Enable bubbles to bounce off the walls
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Install instructions
+```
+$ npm install
+$ npm run start
+```
