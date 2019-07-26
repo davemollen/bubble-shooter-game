@@ -1,46 +1,37 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useEffect, useContext } from 'react'
 import { GameContext } from '../contexts/GameContext'
+import { setGameStatus, setCountDown } from '../actions/gameActions'
 
 const Timer: React.FC = () => {
   const { state, dispatch }: any = useContext(GameContext)
-  const { gameStatus, score } = state
-  const [timer, setTimer] = useState(120)
+  const { gameStatus, score, countDown } = state
     
   useEffect(() => {
-    let interval: any = null;
+    let interval: number = 0;
     if (gameStatus === 'active') {
       interval = setInterval(() => {
-        setTimer(timer - 1);
+        dispatch(setCountDown(countDown - 1))
       }, 1000);
     } else {
       clearInterval(interval);
     }
+
     return () => clearInterval(interval);
-  }, [timer, gameStatus]);
+  }, [countDown, gameStatus, dispatch]);
 
-  if(timer === 0 && gameStatus === 'inactive'){
-    setTimer(120)
-  }
-
-  if(timer === 0 && gameStatus === 'active'){
-    dispatch({
-      type: 'GAME_STATUS',
-      payload: {
-        ...state,
-        gameStatus: 'finished'
-      }
-    })
+  if(countDown === 0 && gameStatus === 'active'){
+    dispatch(setGameStatus('finished'))
   }
 
   const secondsToMinutes = (secondsInput: number): string => {
-    const minutes: string = '0' + Math.floor(secondsInput / 60);
-    const seconds: string = '0' + (secondsInput % 60);
-    return minutes.substr(-2) + ":" + seconds.substr(-2);
+    const minutes: string = Math.floor(secondsInput / 60).toString().padStart(2, '0');
+    const seconds: string = (secondsInput % 60).toString().padStart(2, '0');
+    return minutes + ":" + seconds;
   }
 
   return (
     <div className='timer'>
-      <h4>Time: {secondsToMinutes(timer)}</h4>
+      <h4>Time: {secondsToMinutes(countDown)}</h4>
       <h4>Score: {score}</h4>
     </div>
   )

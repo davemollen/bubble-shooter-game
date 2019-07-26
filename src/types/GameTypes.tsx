@@ -7,7 +7,9 @@ export interface Bubbles {
   shootingBubble: Bubble,
   hitCoordinates: number[],
   gameStatus: string
-  score: number
+  score: number,
+  countDown: number,
+  clickCount: number
 }
 
 export interface DispatchBubbles {
@@ -18,6 +20,8 @@ export interface DispatchBubbles {
     hitCoordinates?: number[],
     gameStatus?: string
     score?: number
+    countDown?: number
+    clickCount?: number
   }
 }
 

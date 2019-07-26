@@ -11,6 +11,8 @@ const gameReducer = (state: Bubbles, action: {type: string, payload: any}) => {
     hitCoordinates, 
     score,
     gameStatus,  
+    countDown, 
+    clickCount
   } = action.payload
 
   switch(action.type){
@@ -19,9 +21,13 @@ const gameReducer = (state: Bubbles, action: {type: string, payload: any}) => {
     case 'GAME_STATUS':
       return {...state, gameStatus}
     case 'SHOOT_BUBBLE':
-      return {...state, hitCoordinates}
+      return {...state, hitCoordinates, clickCount}
     case 'REMOVE_BUBBLES':
       return {...state, gameTable, shootingBubble, score} 
+    case 'ADD_NEW_BUBBLEROW':
+      return {...state, gameTable}
+    case 'COUNTDOWN':
+      return {...state, countDown}
     default:
       return state
   }
