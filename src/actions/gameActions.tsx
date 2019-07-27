@@ -105,11 +105,11 @@ export const removeBubbles = (state: Bubbles, dispatch: Function): void => {
     }
   })
 
-  if(clickCount % 9 === 0 && clickCount !== 0){
-    dispatch(addNewRowOfBubbles(gameTableCopy))
-  }
-
   dispatch(checkForGameOver(gameTableCopy))
+
+  if(clickCount % 9 === 0 && clickCount !== 0){
+    addNewRowOfBubbles(gameTableCopy, dispatch)
+  }
 }
 
 const removeAdjacentBubbles = (state: Bubbles, matches: number[][]): number => {
@@ -176,7 +176,7 @@ const breakFromSearchOffset = (state: Bubbles, matches: number[][], adjacentRow:
   return false
 }
 
-const addNewRowOfBubbles = (gameTable: Bubble[][]): DispatchBubbles => {
+const addNewRowOfBubbles = (gameTable: Bubble[][], dispatch: Function): void => {
   let newRow: Bubble[] = []
   for(let column=10; column>=0; column--){
     newRow.push(pickRandomColor())
@@ -185,12 +185,13 @@ const addNewRowOfBubbles = (gameTable: Bubble[][]): DispatchBubbles => {
   const removeRowFromGameTable = gameTable.slice(0, 8)
   const addRowToGameTable = [newRow,...removeRowFromGameTable]
   
-  return {
+  dispatch({
     type: 'ADD_NEW_BUBBLEROW',
     payload: {
       gameTable: addRowToGameTable,
     }
-  }
+  })
+  dispatch(checkForGameOver(addRowToGameTable))
 }
 
 const checkForGameOver = (gameTable: Bubble[][]): DispatchBubbles => {

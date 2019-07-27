@@ -10,7 +10,7 @@ const GameContainer: React.FC = () => {
   const [shoot, setShoot] = useState<boolean>(false)
   const [angle, setAngle] = useState<number>(0)
 
-  const handleMousePosition = (event: MouseEvent) => {
+  const handleMousePosition = (event: MouseEvent): void => {
     if(gameStatus !== 'active') return
     const updateAngle: number = angle + (event.movementX * 0.5)
     setAngle(
@@ -18,13 +18,13 @@ const GameContainer: React.FC = () => {
     )
   }
 
-  const handleMouseDown = () => {
+  const handleMouseDown = (): void => {
     if(shoot || state.gameStatus !== 'active') return
     dispatch(shootBubble(angle, state))
     setShoot(true)
   }
 
-  const handleTransitionEnd = () => {
+  const handleTransitionEnd = (): void => {
     if(shoot){
       removeBubbles(state, dispatch)
       setShoot(false)

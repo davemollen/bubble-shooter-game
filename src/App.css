@@ -116,3 +116,17 @@ button:active {
 button:focus {
   outline: none;
 }
+
+.highScores {
+  clear: both;
+  float: right;
+  width: 20vw;
+  margin-right: 6.5vw;
+  background-color: cadetblue;
+  border: 2px solid black;
+  border-radius: 2vw;
+}
+.highScores ul {
+  list-style: none;
+  padding: 0;
+}

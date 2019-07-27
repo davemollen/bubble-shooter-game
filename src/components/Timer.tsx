@@ -7,7 +7,7 @@ const Timer: React.FC = () => {
   const { gameStatus, score, countDown } = state
     
   useEffect(() => {
-    let interval: number = 0;
+    let interval: any = 0;
     if (gameStatus === 'active') {
       interval = setInterval(() => {
         dispatch(setCountDown(countDown - 1))
@@ -31,8 +31,10 @@ const Timer: React.FC = () => {
 
   return (
     <div className='timer'>
-      <h4>Time: {secondsToMinutes(countDown)}</h4>
-      <h4>Score: {score}</h4>
+      <h2>Time</h2>
+      <h4>{secondsToMinutes(countDown)}</h4>
+      <h2>Score</h2>
+      <h4>{score}</h4>
     </div>
   )
 }
