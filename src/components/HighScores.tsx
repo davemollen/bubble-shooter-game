@@ -1,30 +1,31 @@
-import React, { useState, useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
+import { GameContext } from '../contexts/GameContext'
+import { HighScore } from '../types/GameTypes'
+import { loadHighScores } from '../actions/gameActions'
 import axios, { AxiosResponse } from 'axios'
 
-interface Score {
-  id: number,
-  name: string,
-  high_score: number
-}
-
 const HighScores: React.FC = () => {
-  const [highScores, setHighScores] = useState<Score[]>([])
+  const { state, dispatch }: any = useContext(GameContext)
+  const { highScores } = state
 
-  useEffect(() =>{
-    getHighScores()
-  }, [])
+  useEffect(() => {
+    const fetchHighScores = async (): Promise<void> => {
+      try {
+        const response: AxiosResponse = 
+          await axios.get('https://bubble-shooter-server.herokuapp.com/v1/scores')
+        dispatch(loadHighScores(response.data))
+      } catch(error){
+        console.error(error)
+      }
+    }
+    fetchHighScores()
+  }, [dispatch])
 
-  const getHighScores = async (): Promise<void> => {
-    const response: AxiosResponse = 
-      await axios.get('https://bubble-shooter-server.herokuapp.com/v1/scores')
-    setHighScores(response.data)
-  }
-
-  if(highScores.length === 0){
+  if(!highScores){
     return <></>
   }
 
-  const highScoreList = highScores.map((highScore: Score) => {
+  const highScoreList = highScores.map((highScore: HighScore) => {
     const {id, name, high_score} = highScore
     return (
       <li key={id}>

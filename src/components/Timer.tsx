@@ -10,7 +10,7 @@ const Timer: React.FC = () => {
     let interval: any = 0;
     if (gameStatus === 'active') {
       interval = setInterval(() => {
-        dispatch(setCountDown(countDown - 1))
+        dispatch(setCountDown(countDown))
       }, 1000);
     } else {
       clearInterval(interval);

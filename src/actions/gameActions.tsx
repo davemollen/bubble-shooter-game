@@ -1,4 +1,4 @@
-import { Bubbles, Bubble, DispatchBubbles } from '../types/GameTypes'
+import { Bubbles, Bubble, DispatchBubbles, HighScore } from '../types/GameTypes'
 
 const pickRandomColor = (): { color: string } => {
   const allColors: string[] = ['blue', 'red', 'purple', 'green']
@@ -7,7 +7,7 @@ const pickRandomColor = (): { color: string } => {
 } 
 
 export const initializeGame = (): DispatchBubbles => {
-  const state: Bubbles = {
+  const state: Partial<Bubbles> = {
     gameTable: [[],[],[],[],[],[],[],[],[]],
     shootingBubble: { color: null },
     hitCoordinates: [],
@@ -17,15 +17,17 @@ export const initializeGame = (): DispatchBubbles => {
     clickCount: 0
   }
 
-  for(let column=10; column>=0; column--){
-    for(let row=8; row>=0; row--){
-      if(row < 3){
-        state.gameTable[row][column] = pickRandomColor()
-      } else {
-        state.gameTable[row][column] = { color: null }
+  if(state.gameTable !== undefined){
+    for(let column=10; column>=0; column--){
+      for(let row=8; row>=0; row--){
+        if(row < 3){
+          state.gameTable[row][column] = pickRandomColor()
+        } else {
+          state.gameTable[row][column] = { color: null }
+        }
       }
     }
-  }
+  } 
   state.shootingBubble = pickRandomColor()
 
   return {
@@ -228,6 +230,24 @@ export const setCountDown = (countDown: number): DispatchBubbles => {
     type: 'COUNTDOWN',
     payload: {
       countDown: countDown - 1
+    }
+  }
+}
+
+export const loadHighScores = (highScores: HighScore[]): DispatchBubbles => {
+  return {
+    type: 'LOAD_HIGH_SCORES',
+    payload: {
+      highScores
+    }
+  }
+}
+
+export const updateHighScores = (highScore: HighScore): DispatchBubbles => {
+  return {
+    type: 'UPDATE_HIGH_SCORES',
+    payload: {
+      highScore
     }
   }
 }
