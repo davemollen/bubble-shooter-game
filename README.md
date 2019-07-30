@@ -4,7 +4,7 @@
 
 ## Table of contents:
 - [Technologies used](#Technologies-used)
-- [Server](#Server)
+- [API](#API)
 - [Description](#Description)
 - [Install instructions](#Install-instructions)
 - [Future work](#Future-work)
@@ -14,8 +14,8 @@
 - React Hooks & Context
 - TypeScript
 
-## Server
-The repository for the server can be found [here](https://github.com/davemollen/bubble-shooter-server)
+## API
+The repository for the API can be found [here](https://github.com/davemollen/bubble-shooter-server).
 
 ## Goal
 The goal for this project was to get more practice with algorithms, React Hooks & Context and TypeScript. 
