@@ -2,13 +2,14 @@ import React, { useContext } from 'react'
 import { GameContext } from '../contexts/GameContext'
 import { Bubble, GameProps } from '../types/GameTypes'
 import { bubbleStyle, shootingBubbleStyle } from './BubbleStyles'
+import Loading from './Loading'
 
 const Game: React.FC<GameProps> = ({handleMousePosition, handleMouseDown, handleTransitionEnd, angle, shoot}) => {
   const { state }: any = useContext(GameContext)
   const { gameTable, shootingBubble, hitCoordinates } = state
 
   if(gameTable === undefined){
-    return <p>Loading...</p>
+    return <Loading/>
   }
 
   const bubbles = gameTable.map((row: Bubble[], rowIndex: number) => {
