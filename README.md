@@ -4,18 +4,15 @@
 
 ## Table of contents:
 - [Technologies used](#Technologies-used)
-- [API](#API)
 - [Description](#Description)
 - [Install instructions](#Install-instructions)
+- [API](#API)
 - [Future work](#Future-work)
 
 ## Technologies used
 - React
 - React Hooks & Context
 - TypeScript
-
-## API
-The repository for the API can be found [here](https://github.com/davemollen/bubble-shooter-server).
 
 ## Goal
 The goal for this project was to get more practice with algorithms, React Hooks & Context and TypeScript. 
@@ -28,6 +25,9 @@ This is an interpretation of the famous Bubble Shooter game. I haven't done this
 $ npm install
 $ npm run start
 ```
+
+## API
+The repository for the API can be found [here](https://github.com/davemollen/bubble-shooter-server).
 
 ## Future work
 - Enable bubbles to bounce off the walls
