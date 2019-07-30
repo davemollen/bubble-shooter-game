@@ -12,8 +12,7 @@ const HighScores: React.FC = () => {
     const fetchHighScores = async (): Promise<void> => {
       try {
         const response: AxiosResponse =
-          // await axios.get('https://bubble-shooter-server.herokuapp.com/v1/scores')
-          await axios.get('http://localhost:4000/v1/scores')
+          await axios.get('https://bubble-shooter-server.herokuapp.com/v1/scores')
         dispatch(loadHighScores(response.data))
       } catch(error){
         console.error(error)

@@ -12,10 +12,7 @@ const ScoreForm: React.FC = () => {
     event.preventDefault()
     try {
       const response: AxiosResponse = 
-        // await axios.post('https://bubble-shooter-server.herokuapp.com/v1/scores',
-        //   {name, high_score}
-        // )
-        await axios.post('http://localhost:4000/v1/scores',
+        await axios.post('https://bubble-shooter-server.herokuapp.com/v1/scores',
           {name, high_score}
         )
       dispatch(initializeGame())
