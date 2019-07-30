@@ -6,6 +6,7 @@
 - [Technologies used](#Technologies-used)
 - [Description](#Description)
 - [Install instructions](#Install-instructions)
+- [API](#API)
 - [Future work](#Future-work)
 
 ## Technologies used
@@ -24,6 +25,9 @@ This is an interpretation of the famous Bubble Shooter game. I haven't done this
 $ npm install
 $ npm run start
 ```
+
+## API
+The repository for the API can be found [here](https://github.com/davemollen/bubble-shooter-server).
 
 ## Future work
 - Enable bubbles to bounce off the walls
