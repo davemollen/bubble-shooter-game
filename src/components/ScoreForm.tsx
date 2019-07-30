@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react'
 import { GameContext } from '../contexts/GameContext'
-import { initializeGame, updateHighScores } from '../actions/gameActions'
+import { initializeGame, loadHighScores } from '../actions/gameActions'
 import axios, { AxiosResponse } from 'axios'
 
 const ScoreForm: React.FC = () => {
@@ -12,11 +12,14 @@ const ScoreForm: React.FC = () => {
     event.preventDefault()
     try {
       const response: AxiosResponse = 
-        await axios.post('https://bubble-shooter-server.herokuapp.com/v1/scores',
+        // await axios.post('https://bubble-shooter-server.herokuapp.com/v1/scores',
+        //   {name, high_score}
+        // )
+        await axios.post('http://localhost:4000/v1/scores',
           {name, high_score}
         )
-      dispatch(updateHighScores(response.data))
       dispatch(initializeGame())
+      dispatch(loadHighScores(response.data))
     } catch(error){
       console.error(error);
     }

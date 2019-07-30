@@ -14,7 +14,7 @@ export const initializeGame = (): DispatchBubbles => {
     gameStatus: 'inactive',
     score: 0,
     countDown: 120,
-    clickCount: 0
+    clickCount: 0,
   }
 
   if(state.gameTable !== undefined){
@@ -239,15 +239,6 @@ export const loadHighScores = (highScores: HighScore[]): DispatchBubbles => {
     type: 'LOAD_HIGH_SCORES',
     payload: {
       highScores
-    }
-  }
-}
-
-export const updateHighScores = (highScore: HighScore): DispatchBubbles => {
-  return {
-    type: 'UPDATE_HIGH_SCORES',
-    payload: {
-      highScore
     }
   }
 }

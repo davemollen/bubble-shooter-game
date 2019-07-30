@@ -9,8 +9,7 @@ const gameReducer = (state: Bubbles, action: DispatchBubbles): any => {
     gameStatus,  
     countDown, 
     clickCount, 
-    highScores,
-    highScore
+    highScores
   } = action.payload
 
   switch(action.type){
@@ -28,8 +27,6 @@ const gameReducer = (state: Bubbles, action: DispatchBubbles): any => {
       return {...state, countDown}
     case 'LOAD_HIGH_SCORES':
       return {...state, highScores}
-    case 'UPDATE_HIGH_SCORES':
-      return {...state, highScores: [...state.highScores, highScore]}
     default:
       return state
   }
