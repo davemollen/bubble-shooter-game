@@ -26,6 +26,4 @@ $ npm run start
 ```
 
 ## Future work
-- Write high scores to a database and show them on screen
 - Enable bubbles to bounce off the walls
-- Add a row of new bubbles on top after a set interval of time
