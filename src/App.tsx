@@ -5,6 +5,7 @@ import Timer from './components/Timer'
 import GameContextProvider from './contexts/GameContext';
 import GameStatus from './components/GameStatus'
 import GameContainer from './components/GameContainer';
+import HighScores from './components/HighScores';
 
 const App: React.FC = () => {
   return (
@@ -14,6 +15,7 @@ const App: React.FC = () => {
         <GameStatus />
         <GameContainer />
         <Timer />
+        <HighScores />
       </GameContextProvider>
     </div>
   );

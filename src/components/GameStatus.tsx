@@ -1,24 +1,25 @@
 import React, { useContext } from 'react'
 import { GameContext } from '../contexts/GameContext'
 import ScoreForm from './ScoreForm'
+import { initializeGame, setGameStatus } from '../actions/gameActions'
 
 const StartGame: React.FC = () => {
   const { state, dispatch }: any = useContext(GameContext)
   const { gameStatus } = state
 
-  const handleClick = () => {
-    dispatch({
-      type: 'GAME_STATUS',
-      payload: {
-        gameStatus: 'active'
-      }
-    })
+  const onStart = () => {
+    dispatch(setGameStatus('active'))
+  }
+
+  const onStartAgain = () => {
+    dispatch(initializeGame())
+    dispatch(setGameStatus('active'))
   }
 
   if(gameStatus === 'inactive'){
     return (
       <div className='gamestatus'>
-        <button onClick={handleClick}>START GAME</button>
+        <button onClick={onStart}>START GAME</button>
       </div>
     )
   }
@@ -29,6 +30,12 @@ const StartGame: React.FC = () => {
         <ScoreForm />
       </div>
     )
+  }
+
+  if(gameStatus === 'gameover'){
+    return <div className='gamestatus'>
+      <button onClick={onStartAgain}>START AGAIN</button>
+    </div>
   }
 
   return (

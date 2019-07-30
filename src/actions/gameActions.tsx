@@ -1,4 +1,4 @@
-import { Bubbles, Bubble, DispatchBubbles } from '../types/GameTypes'
+import { Bubbles, Bubble, DispatchBubbles, HighScore } from '../types/GameTypes'
 
 const pickRandomColor = (): { color: string } => {
   const allColors: string[] = ['blue', 'red', 'purple', 'green']
@@ -7,23 +7,27 @@ const pickRandomColor = (): { color: string } => {
 } 
 
 export const initializeGame = (): DispatchBubbles => {
-  const state: Bubbles = {
+  const state: Partial<Bubbles> = {
     gameTable: [[],[],[],[],[],[],[],[],[]],
     shootingBubble: { color: null },
     hitCoordinates: [],
     gameStatus: 'inactive',
-    score: 0
+    score: 0,
+    countDown: 120,
+    clickCount: 0,
   }
 
-  for(let column=10; column>=0; column--){
-    for(let row=8; row>=0; row--){
-      if(row < 3){
-        state.gameTable[row][column] = pickRandomColor()
-      } else {
-        state.gameTable[row][column] = { color: null }
+  if(state.gameTable !== undefined){
+    for(let column=10; column>=0; column--){
+      for(let row=8; row>=0; row--){
+        if(row < 3){
+          state.gameTable[row][column] = pickRandomColor()
+        } else {
+          state.gameTable[row][column] = { color: null }
+        }
       }
     }
-  }
+  } 
   state.shootingBubble = pickRandomColor()
 
   return {
@@ -35,7 +39,7 @@ export const initializeGame = (): DispatchBubbles => {
 }
 
 export const shootBubble = (angle: number, state: Bubbles): DispatchBubbles => {
-  const { gameTable } = state
+  const { gameTable, clickCount } = state
   let prevRow: number = 0
   let prevColumn: number = 0
 
@@ -74,32 +78,39 @@ export const shootBubble = (angle: number, state: Bubbles): DispatchBubbles => {
   return {
     type: 'SHOOT_BUBBLE',
     payload: {
-      hitCoordinates
+      hitCoordinates,
+      clickCount: clickCount + 1
     }
   }
 }
 
-const unpackGameTable = (gameTable: Bubble[][]): Bubble[][] => {
+const copyGameTable = (gameTable: Bubble[][]): Bubble[][] => {
   return gameTable.map(column => column.map(row => row))
 }
 
-export const removeBubbles = (state: Bubbles): DispatchBubbles => {
-  const { gameTable, shootingBubble, hitCoordinates, score } = state
+export const removeBubbles = (state: Bubbles, dispatch: Function): void => {
+  const { gameTable, shootingBubble, hitCoordinates, score, clickCount } = state
   const [row, column] = hitCoordinates
-  const gameTableCopy = unpackGameTable(gameTable)
+  const gameTableCopy = copyGameTable(gameTable)
 
   gameTableCopy[row][column] = shootingBubble
   let matches: number[][] = []
   const removedBubbleCount: number = removeAdjacentBubbles({...state, gameTable: gameTableCopy}, matches) 
   const updatedScore: number = removedBubbleCount * removedBubbleCount + score
 
-  return {
+  dispatch({
     type: 'REMOVE_BUBBLES',
     payload: {
       gameTable: gameTableCopy,
       shootingBubble: pickRandomColor(),
       score: updatedScore
     }
+  })
+
+  dispatch(checkForGameOver(gameTableCopy))
+
+  if(clickCount % 9 === 0 && clickCount !== 0){
+    addNewRowOfBubbles(gameTableCopy, dispatch)
   }
 }
 
@@ -165,4 +176,69 @@ const breakFromSearchOffset = (state: Bubbles, matches: number[][], adjacentRow:
   }
   
   return false
+}
+
+const addNewRowOfBubbles = (gameTable: Bubble[][], dispatch: Function): void => {
+  let newRow: Bubble[] = []
+  for(let column=10; column>=0; column--){
+    newRow.push(pickRandomColor())
+  }
+
+  const removeRowFromGameTable = gameTable.slice(0, 8)
+  const addRowToGameTable = [newRow,...removeRowFromGameTable]
+  
+  dispatch({
+    type: 'ADD_NEW_BUBBLEROW',
+    payload: {
+      gameTable: addRowToGameTable,
+    }
+  })
+  dispatch(checkForGameOver(addRowToGameTable))
+}
+
+const checkForGameOver = (gameTable: Bubble[][]): DispatchBubbles => {
+  const gameOver: boolean = gameTable[8].some(row => row.color !== null)
+  
+  if(gameOver){
+    return {
+      type: 'GAME_STATUS',
+      payload: {
+        gameStatus: 'gameover',
+      }
+    }
+  } else {
+    return {
+      type: 'GAME_STATUS',
+      payload: {
+        gameStatus: 'active',
+      }
+    }
+  }
+}
+
+export const setGameStatus = (gameStatus: string): DispatchBubbles => {
+  return {
+    type: 'GAME_STATUS',
+    payload: {
+      gameStatus: gameStatus
+    }
+  }
+}
+
+export const setCountDown = (countDown: number): DispatchBubbles => {
+  return {
+    type: 'COUNTDOWN',
+    payload: {
+      countDown: countDown - 1
+    }
+  }
+}
+
+export const loadHighScores = (highScores: HighScore[]): DispatchBubbles => {
+  return {
+    type: 'LOAD_HIGH_SCORES',
+    payload: {
+      highScores
+    }
+  }
 }
