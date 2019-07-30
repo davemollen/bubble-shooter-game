@@ -5,7 +5,7 @@ import { initializeGame, setGameStatus } from '../actions/gameActions'
 
 const StartGame: React.FC = () => {
   const { state, dispatch }: any = useContext(GameContext)
-  const { gameStatus } = state
+  const { gameStatus, score, highScores } = state
 
   const onStart = () => {
     dispatch(setGameStatus('active'))
@@ -25,16 +25,25 @@ const StartGame: React.FC = () => {
   }
 
   if(gameStatus === 'finished'){
+    if(score > highScores[9]){
+      return (
+        <div className='gamestatus'>
+          <span>NEW HIGHSCORE</span>
+          <ScoreForm />
+        </div>
+      )
+    }
     return (
       <div className='gamestatus'>
-        <ScoreForm />
+        <button onClick={onStartAgain}>WELL DONE, START AGAIN</button>
       </div>
     )
   }
 
   if(gameStatus === 'gameover'){
     return <div className='gamestatus'>
-      <button onClick={onStartAgain}>START AGAIN</button>
+      <button onClick={onStartAgain}>GAME OVER, START AGAIN
+      </button>
     </div>
   }
 
