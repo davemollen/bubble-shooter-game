@@ -3,6 +3,7 @@ import { GameContext } from '../contexts/GameContext'
 import { HighScore } from '../types/GameTypes'
 import { loadHighScores } from '../actions/gameActions'
 import axios, { AxiosResponse } from 'axios'
+import Loading from './Loading'
 
 const HighScores: React.FC = () => {
   const { state, dispatch }: any = useContext(GameContext)
@@ -22,7 +23,12 @@ const HighScores: React.FC = () => {
   }, [dispatch])
 
   if(!highScores){
-    return <></>
+    return (
+      <div className='highScores'>
+        <h2>High Scores</h2>
+        <Loading/>
+      </div>
+    )
   }
 
   const highScoreList = highScores.map((highScore: HighScore) => {

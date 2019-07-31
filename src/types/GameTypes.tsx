@@ -21,9 +21,7 @@ export interface Bubbles {
 
 export interface DispatchBubbles {
   type: string,
-  payload: Partial<Bubbles> & {
-    highScore?: HighScore
-  }
+  payload: Partial<Bubbles>
 }
 
 export interface GameProps {
