@@ -9,7 +9,7 @@ import HighScores from './components/HighScores';
 
 const App: React.FC = () => {
   return (
-    <div className="App">
+    <div className="app">
       <Title />
       <GameContextProvider>
         <GameStatus />

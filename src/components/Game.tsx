@@ -9,7 +9,11 @@ const Game: React.FC<GameProps> = ({handleMousePosition, handleMouseDown, handle
   const { gameTable, shootingBubble, hitCoordinates } = state
 
   if(gameTable === undefined){
-    return <Loading/>
+    return (
+      <div className='gameStatus'>
+        <Loading/>
+      </div>
+    )
   }
 
   const bubbles = gameTable.map((row: Bubble[], rowIndex: number) => {
@@ -31,11 +35,11 @@ const Game: React.FC<GameProps> = ({handleMousePosition, handleMouseDown, handle
   })
   
   return (
-    <div className='fullscreen' 
+    <div className='fullScreen' 
       onMouseDown={() => handleMouseDown()}
       onMouseMove={(event) => handleMousePosition(event)}
     >
-      <div className='gamescreen'> 
+      <div className='gameScreen'> 
         <div className='flexContainer'>{bubbles}</div>
         <div className='line'></div>
         <div className='arrow' style={{transform: `rotate(${angle}deg)`}}></div>

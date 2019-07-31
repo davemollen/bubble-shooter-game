@@ -1,9 +1,9 @@
-.App {
+.app {
   text-align: center;
   font-size:calc(8px + 0.4vw);
 }
 
-.fullscreen {
+.fullScreen {
   position: absolute;
   top: 0;
   left: 0;
@@ -11,7 +11,7 @@
   right: 0;
 }
 
-.gamescreen {
+.gameScreen {
   position: relative;
   width: 46vw; /*575px*/
   height: 44vw; /*550px*/
@@ -82,7 +82,7 @@
   padding: 0;
 }
 
-.gamestatus {
+.gameStatus {
   position: absolute;
   top: 0;
   left: 0;
