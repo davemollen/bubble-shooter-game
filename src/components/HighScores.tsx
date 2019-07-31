@@ -3,6 +3,7 @@ import { GameContext } from '../contexts/GameContext'
 import { HighScore } from '../types/GameTypes'
 import { loadHighScores } from '../actions/gameActions'
 import axios, { AxiosResponse } from 'axios'
+import Loading from './Loading'
 
 const HighScores: React.FC = () => {
   const { state, dispatch }: any = useContext(GameContext)
@@ -21,7 +22,16 @@ const HighScores: React.FC = () => {
     fetchHighScores()
   }, [dispatch])
 
-  const highScoreList = highScores && highScores.map((highScore: HighScore) => {
+  if(!highScores){
+    return (
+      <div className='highScores'>
+        <h2>High Scores</h2>
+        <Loading/>
+      </div>
+    )
+  }
+
+  const highScoreList = highScores.map((highScore: HighScore) => {
     const {id, name, high_score} = highScore
     return (
       <li key={id}>
@@ -31,13 +41,12 @@ const HighScores: React.FC = () => {
   })
 
   const emptyScoreList = () => {
-    const highScoresLength = highScores ? highScores.length : 0
-    const emptyScoreslength = Math.max(5 - highScoresLength, 0)
-    const values = new Array(emptyScoreslength).fill(`- - - - - - - - - - - - - - -`)
-    return values.map((value, index) => {
+    const emptyScoreslength = Math.max(5 - highScores.length, 0)
+    const dashesArray = new Array(emptyScoreslength).fill(`- - - - - - - - - - - - - - -`)
+    return dashesArray.map((dashes, index) => {
       return (
         <li key={index-10}>
-          <h4>{value}</h4>
+          <h4>{dashes}</h4>
         </li>
       )
     })
