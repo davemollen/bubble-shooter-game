@@ -23,7 +23,7 @@ const Game: React.FC<GameProps> = ({handleMousePosition, handleMouseDown, handle
       } 
       else {
         return (
-          <div className='bubble' key={columnIndex}>{rowIndex} {columnIndex}</div>
+          <div className='bubble' key={columnIndex}></div>
         )
       }
     })
