@@ -25,7 +25,7 @@ const StartGame: React.FC = () => {
   }
 
   if(gameStatus === 'finished'){
-    if(score > highScores[4]){
+    if(highScores.length < 5 || score > highScores[4]){
       return (
         <div className='gamestatus'>
           <span>NEW HIGHSCORE!</span>
