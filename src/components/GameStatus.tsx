@@ -25,25 +25,26 @@ const StartGame: React.FC = () => {
   }
 
   if(gameStatus === 'finished'){
-    if(score > highScores[9]){
+    if(score > highScores[4]){
       return (
         <div className='gamestatus'>
-          <span>NEW HIGHSCORE</span>
+          <span>NEW HIGHSCORE!</span>
           <ScoreForm />
         </div>
       )
     }
     return (
       <div className='gamestatus'>
-        <button onClick={onStartAgain}>WELL DONE, START AGAIN</button>
+        <span>well done!</span>
+        <button onClick={onStartAgain}>START AGAIN</button>
       </div>
     )
   }
 
   if(gameStatus === 'gameover'){
     return <div className='gamestatus'>
-      <button onClick={onStartAgain}>GAME OVER, START AGAIN
-      </button>
+      <span>game over</span>
+      <button onClick={onStartAgain}> START AGAIN</button>
     </div>
   }
 

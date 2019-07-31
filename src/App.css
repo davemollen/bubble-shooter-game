@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  font-size:calc(8px + 0.4vw);
 }
 
 .fullscreen {
@@ -15,7 +16,7 @@
   width: 46vw; /*575px*/
   height: 44vw; /*550px*/
   background-color: cadetblue;
-  margin: 80px auto 0 auto;
+  margin: 6em auto 0 auto;
   border: 2px solid black;
   border-radius: 2vw;
   z-index: 0;
@@ -55,16 +56,30 @@
   display: inline-block;
   box-sizing: border-box;
   z-index: 10;
-  /* border: 1px solid black; */
+  border: 1px solid black;
 }
 
 .timer {
+  float: right;
+  width: 20vw;
+  margin-top: 1em;
+  margin-right: 6.5vw;
+  background-color: cadetblue;
+  border: 2px solid black;
+  border-radius: 2vw;
+}
+.highScores {
+  clear: both;
   float: right;
   width: 20vw;
   margin-right: 6.5vw;
   background-color: cadetblue;
   border: 2px solid black;
   border-radius: 2vw;
+}
+.highScores ul {
+  list-style: none;
+  padding: 0;
 }
 
 .gamestatus {
@@ -74,10 +89,9 @@
   bottom: 0;
   right: 0;
   margin: 22vw auto 0 auto;
-  padding: 30px 0;
+  padding: 3em 0;
   z-index: 10;
 }
-
 
 form {
   width: 200px;
@@ -97,11 +111,22 @@ input, input:focus {
   border: solid 1px black;
 }
 
-button {
-  width: 120px;
-  padding: 15px 0px;
+span {
+  display: block;
+  margin: 1em auto;
+  width: 8em;
+  padding: .8em 0;
   border-radius: 4px;
-  font-size: 16px;
+  font-size: .9em;
+  font-weight: 500;
+  background-color: rgb(211, 234, 241);
+  border: solid 1px black;
+}
+button {
+  width: 8em;
+  padding: .8em 0;
+  border-radius: 4px;
+  font-size: 1.2em;
   font-weight: 500;
   background-color: rgb(211, 234, 241);
   border: solid 1px black;
@@ -115,18 +140,4 @@ button:active {
 }
 button:focus {
   outline: none;
-}
-
-.highScores {
-  clear: both;
-  float: right;
-  width: 20vw;
-  margin-right: 6.5vw;
-  background-color: cadetblue;
-  border: 2px solid black;
-  border-radius: 2vw;
-}
-.highScores ul {
-  list-style: none;
-  padding: 0;
 }
