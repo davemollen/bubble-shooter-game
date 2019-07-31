@@ -1,7 +1,6 @@
 import React, { useEffect, useContext } from 'react'
 import { GameContext } from '../contexts/GameContext'
 import { setGameStatus, setCountDown } from '../actions/gameActions'
-import Loading from './Loading'
 
 const Timer: React.FC = () => {
   const { state, dispatch }: any = useContext(GameContext)
@@ -20,8 +19,15 @@ const Timer: React.FC = () => {
     return () => clearInterval(interval)
   }, [countDown, gameStatus, dispatch])
 
-  if(!countDown){
-    return <Loading/>
+  if(countDown === undefined){
+    return (
+      <div className='timer'>
+        <h2>Time</h2>
+        <h4><br/></h4>
+        <h2>Score</h2>
+        <h4><br/></h4>
+      </div>
+    )
   }
 
   if(countDown === 0 && gameStatus === 'active'){

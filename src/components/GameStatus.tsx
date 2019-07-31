@@ -28,7 +28,7 @@ const StartGame: React.FC = () => {
     if(highScores.length < 5 || score > highScores[4]){
       return (
         <div className='gamestatus'>
-          <span>NEW HIGHSCORE!</span>
+          <span>new highscore!</span>
           <ScoreForm />
         </div>
       )
