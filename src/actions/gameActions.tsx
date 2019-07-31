@@ -49,7 +49,6 @@ export const shootBubble = (angle: number, state: Bubbles): DispatchBubbles => {
   const startingRow: number = 8
 
   let hitCoordinates: number[] = []
-  // Go through the rows and go a column to the left or right
   for(let row: number = startingRow; row>=0; row--){
     const hexagonalCorrection: number = row % 2 * -0.5
     currentColumn += columnStepSize
@@ -60,7 +59,6 @@ export const shootBubble = (angle: number, state: Bubbles): DispatchBubbles => {
       break
     }
 
-    // Check if it hits a ball
     const hitBubbleColor: string | null = gameTable[row][roundedColumn].color
     
     if(hitBubbleColor !== null){
@@ -93,7 +91,7 @@ export const removeBubbles = (state: Bubbles, dispatch: Function): void => {
   const [row, column] = hitCoordinates
   const gameTableCopy = copyGameTable(gameTable)
 
-  gameTableCopy[row][column] = shootingBubble
+  gameTableCopy[row][column] = {...shootingBubble}
   let matches: number[][] = []
   const removedBubbleCount: number = removeAdjacentBubbles({...state, gameTable: gameTableCopy}, matches) 
   const updatedScore: number = removedBubbleCount * removedBubbleCount + score
@@ -146,7 +144,7 @@ const removeAdjacentBubbles = (state: Bubbles, matches: number[][]): number => {
     matches.push([adjacentRow, adjacentColumn])
     removeAdjacentBubbles({...state, hitCoordinates: [adjacentRow, adjacentColumn]}, matches)
   })
-
+  
   if(matches.length > 2){
     gameTable[row][column].color = null
     matches.forEach(match => {
